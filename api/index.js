@@ -127,9 +127,8 @@ const server = http.createServer((req, res) => {
       req.on("end", () => {
         // 将数据块组合成完整的数据
         const combinedData = Buffer.concat(body);
-        // 如果请求是音频、图像，直接使用二进制数据
-
-        if (!req.url.startsWith("/v1/audio/") || !req.url.startsWith("/v1/images/")) {
+        // 如果请求是音频，直接使用二进制数据
+        if (!req.url.startsWith("/v1/audio/")) {
           try {
             // 尝试解析JSON
             req.body = JSON.parse(combinedData.toString());
