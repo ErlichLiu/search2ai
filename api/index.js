@@ -34,6 +34,7 @@ async function handleOtherRequest(apiBase, apiKey, req, pathname) {
 
     let data;
     if (pathname.startsWith('/v1/audio/')) {
+        console.log('处理音频文件');
         // 如果路径以 '/v1/audio/' 开头，处理音频文件
         const arrayBuffer = await response.arrayBuffer();
         data = Buffer.from(arrayBuffer);        
@@ -77,6 +78,7 @@ module.exports = async (req, res) => {
         apiKey = authHeader.split(' ')[1]; // 从 Authorization 中获取 API key
     } else {
         res.statusCode = 400;
+        console.log('Authorization header is missing');
         res.end('Authorization header is missing');
         return;
     }
@@ -120,6 +122,7 @@ const server = http.createServer((req, res) => {
                 req.body = JSON.parse(data);
             } catch (error) {
                 res.statusCode = 400;
+                console.error('Invalid JSON:', error);  
                 res.end('Invalid JSON');
                 return;
             }
